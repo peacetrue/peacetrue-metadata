@@ -1,0 +1,11 @@
+description '元数据控制器'
+
+dependencies {
+    api project(":peacetrue-metadata-service-api")
+    implementation "com.github.peacetrue:peacetrue-spring"
+    implementation "org.springframework.boot:spring-boot-starter-webflux"
+    implementation "org.springframework.data:spring-data-commons"
+
+    testImplementation project(':peacetrue-metadata-service-impl')
+    testImplementation project(path: ':peacetrue-metadata-service-impl', configuration: 'testArtifacts')
+}

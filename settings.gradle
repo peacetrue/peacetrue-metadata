@@ -1,0 +1,6 @@
+rootProject.name = "peacetrue-metadata"
+include("peacetrue-metadata-service-api")
+include("peacetrue-metadata-service-impl")
+include("peacetrue-metadata-controller")
+include("peacetrue-metadata-app")
+include("peacetrue-metadata-client")

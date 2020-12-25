@@ -1,0 +1,12 @@
+{
+  "name": "peacetrue-metadata",
+  "version": "0.1.0",
+  "description": "元数据",
+  "files": [
+    "src/modules"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/peacetrue/peacetrue-metadata.git"
+  }
+}
