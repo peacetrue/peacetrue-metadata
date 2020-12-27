@@ -14,6 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import reactor.core.publisher.Hooks;
 import reactor.test.StepVerifier;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -91,12 +93,10 @@ class EntityClassServiceImplTest {
 
     @Test
     void add() {
-        Hooks.onOperatorDebug();
+//        Hooks.onOperatorDebug();
         entityClassService
                 .init()
-                .then(entityClassService.resolveClass(EntityCrossReference.class))
-                .doOnNext(entityAdd -> entityAdd.setOperatorId(1L))
-                .flatMap(entityAdd -> entityService.add(entityAdd))
+                .thenMany(entityClassService.addClass(Collections.singleton(EntityCrossReference.class)))
                 .subscribe()
 //                .as(StepVerifier::create)
 //                .assertNext(vo -> {
@@ -104,6 +104,15 @@ class EntityClassServiceImplTest {
 //                    Assertions.assertEquals(EntityCrossReference.class.getName(), vo.getCode());
 //                })
 //                .verifyComplete()
+        ;
+    }
+
+    @Test
+    void maxSerialNumber() {
+        Hooks.onOperatorDebug();
+        entityClassService
+                .maxSerialNumber()
+                .subscribe()
         ;
     }
 }

@@ -2,6 +2,7 @@ description '元数据客户端'
 
 dependencies {
     api project(":peacetrue-metadata-service-api")
+    implementation "io.projectreactor:reactor-core:3.4.1"
     api 'org.springframework.data:spring-data-commons'
     api 'com.playtika.reactivefeign:feign-reactor-spring-configuration'
 }

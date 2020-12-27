@@ -1,6 +1,8 @@
 package com.github.peacetrue;
 
+import com.github.peacetrue.metadata.clazz.AddEntityFromClassApplicationListener;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -31,6 +33,12 @@ public class ServiceMetadataAutoConfiguration {
     @ConditionalOnMissingBean(R2dbcEntityOperations.class)
     public R2dbcEntityTemplate r2dbcEntityTemplate(DatabaseClient databaseClient) {
         return new R2dbcEntityTemplate(databaseClient);
+    }
+
+    @Bean
+    @ConditionalOnProperty(prefix = "peacetrue.metadata", name = "enable-class", havingValue = "true")
+    public AddEntityFromClassApplicationListener addEntityFromClassApplicationListener() {
+        return new AddEntityFromClassApplicationListener();
     }
 
 }

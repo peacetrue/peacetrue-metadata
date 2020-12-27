@@ -18,6 +18,7 @@ import java.util.function.Supplier;
 @ConfigurationProperties(prefix = "peacetrue.metadata")
 public class ServiceMetadataProperties {
 
+    private boolean enableClass = false;
     private Map<String, ClassConfiguration> classes = new HashMap<>();
 
     @Data

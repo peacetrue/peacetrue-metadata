@@ -23,6 +23,7 @@ import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.data.relational.core.query.Query;
 import org.springframework.data.relational.core.query.Update;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -68,11 +69,18 @@ public class EntityServiceImpl implements EntityService {
     }
 
     @Override
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public Mono<EntityVO> add(EntityAdd params) {
         log.info("新增或获取实体信息[{}]", params);
-        return this.get(Operators.setOperator(params, new EntityGet(params.getCode())))
-                .switchIfEmpty(Mono.defer(() -> this.doAdd(params)));
+        return entityOperations.getDatabaseClient()
+                .execute("select * from entity where code = :code for update")
+                .bind("code", params.getCode())
+                .as(Entity.class).fetch().first()
+                .map(entity -> BeanUtils.map(entity, EntityVO.class))
+                .switchIfEmpty(Mono.defer(() -> this.doAdd(params)))
+                ;
+//        return this.get(Operators.setOperator(params, new EntityGet(params.getCode())))
+//                .switchIfEmpty(Mono.defer(() -> this.doAdd(params)));
     }
 
     private Mono<EntityVO> doAdd(EntityAdd params) {

@@ -2,7 +2,7 @@ drop table if exists entity;
 create table entity
 (
     id            bigint auto_increment primary key,
-    code          varchar(64)  not null,
+    code          varchar(255)  not null,
     name          varchar(255) not null,
     many_to_many  bit          not null,
     remark        varchar(255) not null,

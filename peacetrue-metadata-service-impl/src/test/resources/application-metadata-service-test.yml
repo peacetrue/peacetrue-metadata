@@ -28,3 +28,10 @@ peacetrue:
             reference: com.github.peacetrue.user.User
           modifierId:
             reference: com.github.peacetrue.user.User
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false;MODE=MYSQL
+  test:
+    database:
+      replace: NONE

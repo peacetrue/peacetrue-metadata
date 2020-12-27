@@ -1,7 +1,11 @@
 package com.github.peacetrue.metadata.clazz;
 
 import com.github.peacetrue.metadata.modules.entity.EntityAdd;
+import com.github.peacetrue.metadata.modules.entity.EntityVO;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.Set;
 
 /**
  * @author : xiayx
@@ -13,5 +17,7 @@ public interface EntityClassService {
     Mono<Void> init();
 
     Mono<EntityAdd> resolveClass(Class<?> entityClass);
+
+    Flux<EntityVO> addClass(Set<Class<?>> entityClasses);
 
 }

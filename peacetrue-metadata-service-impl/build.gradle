@@ -17,6 +17,7 @@ dependencies {
 
     api project(":peacetrue-metadata-service-api")
     api 'org.slf4j:slf4j-api'
+    implementation "io.projectreactor:reactor-core:3.4.1"
     implementation 'com.github.peacetrue:peacetrue-spring'
     implementation 'com.github.peacetrue:peacetrue-result'
     implementation 'com.github.peacetrue.dictionary:peacetrue-dictionary-service-api:1.0.0-SNAPSHOT'
@@ -29,22 +30,4 @@ dependencies {
     testImplementation 'io.r2dbc:r2dbc-h2'
     testImplementation 'com.h2database:h2'
     testImplementation 'com.github.peacetrue.dictionary:peacetrue-dictionary-service-impl:1.0.0-SNAPSHOT'
-    testImplementation 'com.github.peacetrue.user:peacetrue-user-controller:1.0.0-SNAPSHOT'
-    testImplementation 'com.github.peacetrue.user:peacetrue-user-service-api:1.0.0-SNAPSHOT'
-    testImplementation 'com.github.peacetrue.user:peacetrue-user-service-impl:1.0.0-SNAPSHOT'
-    testImplementation 'com.github.peacetrue.metadata:peacetrue-metadata-controller:1.0.0-SNAPSHOT'
-    testImplementation 'com.github.peacetrue.metadata:peacetrue-metadata-service-api:1.0.0-SNAPSHOT'
-    testImplementation 'com.github.peacetrue.metadata:peacetrue-metadata-service-impl:1.0.0-SNAPSHOT'
-    testImplementation 'com.github.peacetrue.dictionary:peacetrue-dictionary-controller:1.0.0-SNAPSHOT'
-    testImplementation 'com.github.peacetrue.dictionary:peacetrue-dictionary-service-impl:1.0.0-SNAPSHOT'
-    testImplementation 'com.github.peacetrue.dictionary:peacetrue-dictionary-service-api:1.0.0-SNAPSHOT'
-    testImplementation 'com.github.peacetrue.classify:peacetrue-classify-controller:1.0.0-SNAPSHOT'
-    testImplementation 'com.github.peacetrue.classify:peacetrue-classify-service-impl:1.0.0-SNAPSHOT'
-    testImplementation 'com.github.peacetrue.classify:peacetrue-classify-service-api:1.0.0-SNAPSHOT'
-    testImplementation 'com.github.peacetrue.region:peacetrue-region-controller:1.0.0-SNAPSHOT'
-    testImplementation 'com.github.peacetrue.region:peacetrue-region-service-impl:1.0.0-SNAPSHOT'
-    testImplementation 'com.github.peacetrue.region:peacetrue-region-service-api:1.0.0-SNAPSHOT'
-    testImplementation 'com.github.peacetrue.notice:peacetrue-notice-controller:1.0.0-SNAPSHOT'
-    testImplementation 'com.github.peacetrue.notice:peacetrue-notice-service-impl:1.0.0-SNAPSHOT'
-    testImplementation 'com.github.peacetrue.notice:peacetrue-notice-service-api:1.0.0-SNAPSHOT'
 }

@@ -1,6 +1,7 @@
 description '元数据控制器'
 
 dependencies {
+    implementation "io.projectreactor:reactor-core:3.4.1"
     api project(":peacetrue-metadata-service-api")
     implementation "com.github.peacetrue:peacetrue-spring"
     implementation "org.springframework.boot:spring-boot-starter-webflux"

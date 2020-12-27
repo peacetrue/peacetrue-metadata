@@ -6,7 +6,9 @@ import lombok.*;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -39,4 +41,20 @@ public class EntityAdd extends OperatorCapableImpl<Long> {
     /** 属性集合 */
     private List<PropertyAdd> properties;
 
+    public Set<EntityAdd> getSelfAndReferences() {
+        Set<EntityAdd> entityAdds = new HashSet<>();
+        this.addSelfAndReferences(entityAdds);
+        return entityAdds;
+    }
+
+    public void addSelfAndReferences(Set<EntityAdd> entityAdds) {
+        entityAdds.add(this);
+        if (properties == null) return;
+        for (PropertyAdd property : properties) {
+            EntityAdd entityAdd = property.getReference();
+            if (entityAdd != null && !entityAdds.contains(entityAdd)) {
+                entityAdd.addSelfAndReferences(entityAdds);
+            }
+        }
+    }
 }

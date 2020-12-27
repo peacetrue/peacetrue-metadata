@@ -8,15 +8,17 @@ import com.github.peacetrue.dictionary.modules.dictionarytype.DictionaryTypeVO;
 import com.github.peacetrue.dictionary.modules.dictionaryvalue.DictionaryValueAdd;
 import com.github.peacetrue.dictionary.modules.dictionaryvalue.DictionaryValueGet;
 import com.github.peacetrue.dictionary.modules.dictionaryvalue.DictionaryValueService;
-import com.github.peacetrue.metadata.modules.entity.EntityAdd;
-import com.github.peacetrue.metadata.modules.entity.EntityGet;
-import com.github.peacetrue.metadata.modules.entity.EntityService;
-import com.github.peacetrue.metadata.modules.entity.EntityVO;
+import com.github.peacetrue.metadata.modules.entity.*;
 import com.github.peacetrue.metadata.modules.property.PropertyAdd;
 import com.github.peacetrue.spring.util.BeanUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.r2dbc.core.DatabaseClient;
+import org.springframework.data.r2dbc.core.R2dbcEntityOperations;
+import org.springframework.data.relational.core.query.Criteria;
+import org.springframework.data.relational.core.query.Query;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 import reactor.core.publisher.Flux;
@@ -27,8 +29,7 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Date;
+import java.util.*;
 
 /**
  * @author : xiayx
@@ -38,6 +39,8 @@ import java.util.Date;
 @Service
 public class EntityClassServiceImpl implements EntityClassService {
 
+    @Autowired
+    private R2dbcEntityOperations entityOperations;
     @Autowired
     private EntityService entityService;
     @Autowired
@@ -159,6 +162,65 @@ public class EntityClassServiceImpl implements EntityClassService {
                                         )
                                 )
                 )
+                ;
+    }
+
+    @Override
+    @Transactional
+    public Flux<EntityVO> addClass(Set<Class<?>> entityClasses) {
+        log.info("添加实体类[{}]", entityClasses);
+        return maxSerialNumber()
+                .flatMapMany(serialNumber -> this.doAddClass(entityClasses, serialNumber));
+    }
+
+    private Flux<EntityVO> doAddClass(Set<Class<?>> entityClasses, Long serialNumber) {
+        Set<EntityAdd> processedEntityAdds = new HashSet<>(entityClasses.size());
+        Long[] serialNumbers = {serialNumber + 1};
+        return Flux
+                .fromIterable(entityClasses)
+                //挑选出未入库的
+                .filterWhen(entityClass -> exists(entityClass).map(aBoolean -> !aBoolean))
+                //挑选出未解析过的
+                .filter(entityClass -> processedEntityAdds.stream().map(EntityAdd::getCode).noneMatch(s -> s.equals(entityClass.getName())))
+                .flatMap(entityClass ->
+                        this.resolveClass(entityClass)
+                                .doOnNext(entityAdd -> {
+                                    Set<EntityAdd> selfAndReferences = entityAdd.getSelfAndReferences();
+                                    log.debug("取得自身和引用: {}", selfAndReferences);
+                                    selfAndReferences.forEach(item -> {
+                                        item.setSerialNumber(serialNumbers[0]++);
+                                        item.setOperatorId(1L);
+                                    });
+                                    processedEntityAdds.addAll(selfAndReferences);
+                                })
+                )
+                .flatMap(entityService::add)
+                ;
+    }
+
+    public Mono<Long> maxSerialNumber() {
+        return max(entityOperations.getDatabaseClient(), "entity", "serial_number", 0L);
+    }
+
+    public static Mono<Long> max(DatabaseClient databaseClient, String tableName, String columnName) {
+        return databaseClient
+                .execute(String.format("select max(%s) from %s", columnName, tableName))
+                .map((row) -> Optional.ofNullable(row.get(0, Long.class)))
+                .first()
+                .flatMap(Mono::justOrEmpty)
+                ;
+    }
+
+    public static Mono<Long> max(DatabaseClient databaseClient, String tableName, String columnName, Long defaultValue) {
+        return max(databaseClient, tableName, columnName)
+                .doOnNext(value -> log.info("取得 {} 表最大的 {} = {}", tableName, columnName, value))
+                .switchIfEmpty(Mono.just(defaultValue).doOnNext((value) -> log.info(" {} 表不存在最大的 {} 默认为 {}", tableName, columnName, value)))
+                ;
+    }
+
+    private Mono<Boolean> exists(Class<?> entityClass) {
+        return entityOperations
+                .exists(Query.query(Criteria.where("code").is(entityClass.getName())), Entity.class)
                 ;
     }
 }
