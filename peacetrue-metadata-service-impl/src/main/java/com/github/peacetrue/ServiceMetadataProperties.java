@@ -19,6 +19,7 @@ import java.util.function.Supplier;
 public class ServiceMetadataProperties {
 
     private boolean enableClass = false;
+    private String[] basePackages = {"com.github.peacetrue"};
     private Map<String, ClassConfiguration> classes = new HashMap<>();
 
     @Data

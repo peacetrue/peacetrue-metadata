@@ -96,6 +96,7 @@ public class EntityClassServiceImpl implements EntityClassService {
     }
 
     private Mono<PropertyAdd> resolveProperty(Class<?> entityClass, PropertyDescriptor descriptor) {
+        log.info("解析属性[{}.{}]", entityClass.getName(), descriptor.getName());
         return Mono
                 .just(new PropertyAdd())
                 .doOnNext(propertyAdd -> {
@@ -124,6 +125,7 @@ public class EntityClassServiceImpl implements EntityClassService {
     }
 
     protected String resolveEntityDesc(Class<?> entityClass) {
+        log.debug("解析实体类[{}]描述", entityClass.getName());
         return properties.getClassDesc(entityClass, () -> {
             EntityMetadata entity = entityClass.getAnnotation(EntityMetadata.class);
             return entity == null ? entityClass.getSimpleName() : entity.desc();
@@ -131,6 +133,7 @@ public class EntityClassServiceImpl implements EntityClassService {
     }
 
     protected String resolvePropertyDesc(Class<?> entityClass, String name) {
+        log.debug("解析实体类属性[{}.{}]描述", entityClass.getName(), name);
         String desc = properties.getPropertyConfiguration(entityClass, name).getDesc();
         if (!StringUtils.isEmpty(desc)) return desc;
 
@@ -140,6 +143,7 @@ public class EntityClassServiceImpl implements EntityClassService {
     }
 
     protected String resolveReference(Class<?> entityClass, String name) {
+        log.debug("解析实体类属性[{}.{}]引用", entityClass.getName(), name);
         Class<?> reference = properties.getPropertyConfiguration(entityClass, name).getReference();
         if (reference != null) return reference.getName();
         Field field = ReflectionUtils.findField(entityClass, name);

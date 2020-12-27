@@ -17,6 +17,7 @@ dependencies {
 
     api project(":peacetrue-metadata-service-api")
     api 'org.slf4j:slf4j-api'
+    compile 'org.jooq:jool-java-8'
     implementation "io.projectreactor:reactor-core:3.4.1"
     implementation 'com.github.peacetrue:peacetrue-spring'
     implementation 'com.github.peacetrue:peacetrue-result'
