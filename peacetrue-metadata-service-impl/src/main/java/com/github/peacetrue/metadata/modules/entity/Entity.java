@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 实体实体类
+ * 实体类
  *
  * @author xiayx
  */

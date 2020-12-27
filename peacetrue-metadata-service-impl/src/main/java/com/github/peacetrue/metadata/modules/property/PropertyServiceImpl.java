@@ -47,7 +47,7 @@ public class PropertyServiceImpl implements PropertyService {
                 CriteriaUtils.nullableCriteria(Criteria.where("code")::like, value -> "%" + value + "%", params::getCode),
                 CriteriaUtils.nullableCriteria(Criteria.where("name")::like, value -> "%" + value + "%", params::getName),
                 CriteriaUtils.nullableCriteria(Criteria.where("typeId")::is, params::getTypeId),
-                CriteriaUtils.nullableCriteria(Criteria.where("associateEntityId")::is, params::getAssociateEntityId),
+                CriteriaUtils.nullableCriteria(Criteria.where("referenceId")::is, params::getReferenceId),
                 CriteriaUtils.nullableCriteria(Criteria.where("remark")::like, value -> "%" + value + "%", params::getRemark),
                 CriteriaUtils.nullableCriteria(Criteria.where("serialNumber")::is, params::getSerialNumber),
                 CriteriaUtils.nullableCriteria(Criteria.where("creatorId")::is, params::getCreatorId),
@@ -64,15 +64,21 @@ public class PropertyServiceImpl implements PropertyService {
     public Mono<PropertyVO> add(PropertyAdd params) {
         log.info("新增属性信息[{}]", params);
         BeanUtils.setDefaultValue(params);
-        Property entity = BeanUtils.map(params, Property.class);
-        entity.setCreatorId(params.getOperatorId());
-        entity.setCreatedTime(LocalDateTime.now());
-        entity.setModifierId(entity.getCreatorId());
-        entity.setModifiedTime(entity.getCreatedTime());
-        return entityOperations.insert(entity)
+        return Mono
+                .just(params)
+                .map(propertyAdd -> {
+                    Property entity = BeanUtils.map(params, Property.class);
+                    entity.setCreatorId(params.getOperatorId());
+                    entity.setCreatedTime(LocalDateTime.now());
+                    entity.setModifierId(entity.getCreatorId());
+                    entity.setModifiedTime(entity.getCreatedTime());
+                    return entity;
+                })
+                .flatMap(entity -> entityOperations.insert(entity))
                 .map(item -> BeanUtils.map(item, PropertyVO.class))
                 .doOnNext(item -> eventPublisher.publishEvent(new PayloadApplicationEvent<>(item, params)));
     }
+
 
     @Override
     @Transactional(readOnly = true)

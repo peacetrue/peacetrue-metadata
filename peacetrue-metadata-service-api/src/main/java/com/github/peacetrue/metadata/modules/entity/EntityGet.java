@@ -5,6 +5,12 @@ import lombok.*;
 
 
 /**
+ * 2 种方式获取 {@link EntityVO}：
+ * <ul>
+ *     <li>通过 {@link #id} 获取</li>
+ *     <li>通过 {@link #code} 获取</li>
+ * </ul>
+ *
  * @author xiayx
  */
 @Getter

@@ -10,7 +10,7 @@ export const PropertyEdit = (props) => {
                 <TextInput source="code" validate={[required(), maxLength(32)]}/>
                 <TextInput source="name" validate={[required(), maxLength(255)]}/>
                 <NumberInput source="typeId" validate={[required(), minValue(0)]} min={0}/>
-                <NumberInput source="associateEntityId" validate={[required(), minValue(0)]} min={0}/>
+                <NumberInput source="referenceId" validate={[required(), minValue(0)]} min={0}/>
                 <TextInput source="remark" validate={[required(), maxLength(255)]}/>
                 <NumberInput source="serialNumber" validate={[required(), minValue(0)]} min={0}/>
             </SimpleForm>

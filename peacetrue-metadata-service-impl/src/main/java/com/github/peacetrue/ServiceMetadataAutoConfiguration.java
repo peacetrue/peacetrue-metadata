@@ -18,7 +18,7 @@ import java.util.Objects;
 @Configuration
 @EnableConfigurationProperties(ServiceMetadataProperties.class)
 @ComponentScan(basePackageClasses = ServiceMetadataAutoConfiguration.class)
-@PropertySource("classpath:/application-metadata-service.yml")
+@PropertySource("classpath:application-metadata-service.yml")
 public class ServiceMetadataAutoConfiguration {
 
     private ServiceMetadataProperties properties;

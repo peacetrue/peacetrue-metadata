@@ -1,39 +1,41 @@
-package com.github.peacetrue.metadata.modules.property;
+package com.github.peacetrue.metadata.clazz;
 
 import com.github.peacetrue.core.IdCapable;
-import com.github.peacetrue.metadata.modules.entity.EntityVO;
-import lombok.Data;
+import lombok.*;
+import org.springframework.data.annotation.Id;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
+ * 实体类
+ *
  * @author xiayx
  */
-@Data
-public class PropertyVO implements Serializable, IdCapable<Long> {
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+public class EntitySingleReference implements Serializable, IdCapable<Long> {
 
     private static final long serialVersionUID = 0L;
 
     /** 主键 */
+    @Id
     private Long id;
-    /** 实体. 属性所属实体 */
-    private Long entityId;
-    /** 实体 */
-    private EntityVO entity;
     /** 编码 */
     private String code;
     /** 名称 */
     private String name;
-    /** 类型. 关联字典主键 */
-    private Long typeId;
-    /** 关联实体. 关联的实体，若无设置为 0 */
-    private Long referenceId;
+    /** 多对多关联 */
+    private Boolean manyToMany;
     /** 备注 */
     private String remark;
     /** 序号 */
-    private Integer serialNumber;
+    private Long serialNumber;
     /** 创建者主键 */
+    @PropertyMetadata(desc = "创建者", reference = "com.github.peacetrue.metadata.clazz.UserSelfReference")
     private Long creatorId;
     /** 创建时间 */
     private LocalDateTime createdTime;
@@ -41,4 +43,5 @@ public class PropertyVO implements Serializable, IdCapable<Long> {
     private Long modifierId;
     /** 最近修改时间 */
     private LocalDateTime modifiedTime;
+
 }

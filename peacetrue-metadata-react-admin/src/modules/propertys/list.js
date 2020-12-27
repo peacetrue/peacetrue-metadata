@@ -22,7 +22,7 @@ export const PropertyList = props => {
                 <TextField source="code"/>
                 <TextField source="name"/>
                 <TextField source="typeId"/>
-                <TextField source="associateEntityId"/>
+                <TextField source="referenceId"/>
                 <TextField source="remark"/>
                 <TextField source="serialNumber"/>
                 <TextField source="creatorId"/>

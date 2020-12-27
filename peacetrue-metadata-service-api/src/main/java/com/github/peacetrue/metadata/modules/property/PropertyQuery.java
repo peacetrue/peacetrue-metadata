@@ -30,7 +30,7 @@ public class PropertyQuery extends OperatorCapableImpl<Long> {
     /** 类型. 关联字典主键 */
     private Long typeId;
     /** 关联实体. 关联的实体，若无设置为 0 */
-    private Long associateEntityId;
+    private Long referenceId;
     /** 备注 */
     private String remark;
     /** 序号 */

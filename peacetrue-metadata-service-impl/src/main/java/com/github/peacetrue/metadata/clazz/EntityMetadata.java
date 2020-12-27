@@ -9,12 +9,8 @@ import java.lang.annotation.Target;
  * @author : xiayx
  * @since : 2020-12-25 20:03
  **/
-@Target({ElementType.FIELD, ElementType.METHOD})
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Property {
-
-    String name() default "";
-
-    String associate() default "";
-
+public @interface EntityMetadata {
+    String desc() default "";
 }

@@ -34,7 +34,7 @@ public class PropertyModify extends OperatorCapableImpl<Long> implements IdCapab
     /** 类型. 关联字典主键 */
     private Long typeId;
     /** 关联实体. 关联的实体，若无设置为 0 */
-    private Long associateEntityId;
+    private Long referenceId;
     /** 备注 */
     @Size(min = 1, max = 255)
     private String remark;

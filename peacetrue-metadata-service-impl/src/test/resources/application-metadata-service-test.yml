@@ -1,0 +1,30 @@
+peacetrue:
+  metadata:
+    classes:
+      '[com.github.peacetrue.user.User]':
+        desc: 用户
+        properties:
+          creatorId:
+            reference: com.github.peacetrue.user.User
+          modifierId:
+            reference: com.github.peacetrue.user.User
+      '[com.github.peacetrue.metadata.modules.entity.Entity]':
+        desc: 实体
+        properties:
+          creatorId:
+            reference: com.github.peacetrue.user.User
+          modifierId:
+            reference: com.github.peacetrue.user.User
+      '[com.github.peacetrue.metadata.modules.property.Property]':
+        desc: 属性
+        properties:
+          entityId:
+            reference: com.github.peacetrue.metadata.modules.entity.Entity
+          typeId:
+            reference: com.github.peacetrue.dictionary.modules.dictionaryvalue.DictionaryValue
+          referenceId:
+            reference: com.github.peacetrue.metadata.modules.entity.Entity
+          creatorId:
+            reference: com.github.peacetrue.user.User
+          modifierId:
+            reference: com.github.peacetrue.user.User

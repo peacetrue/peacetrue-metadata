@@ -16,18 +16,18 @@ create table entity
 drop table if exists property;
 create table property
 (
-    id                  bigint auto_increment primary key,
-    entity_id           bigint       not null,
-    code                varchar(32)  not null,
-    name                varchar(255) not null,
-    type_id             bigint       not null,
-    associate_entity_id bigint       not null,
-    remark              varchar(255) not null,
-    serial_number       int          not null,
-    creator_id          bigint       not null,
-    created_time        datetime     not null,
-    modifier_id         bigint       not null,
-    modified_time       timestamp    not null
+    id            bigint auto_increment primary key,
+    entity_id     bigint       not null,
+    code          varchar(32)  not null,
+    name          varchar(255) not null,
+    type_id       bigint       not null,
+    reference_id  bigint       not null,
+    remark        varchar(255) not null,
+    serial_number int          not null,
+    creator_id    bigint       not null,
+    created_time  datetime     not null,
+    modifier_id   bigint       not null,
+    modified_time timestamp    not null
 );
 
 drop table if exists dictionary_type;

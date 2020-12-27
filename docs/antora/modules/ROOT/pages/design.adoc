@@ -6,7 +6,7 @@
 
 === 实体类转实体表信息
 
-以下演示转换 `User` 实体类为实体表信息：
+以下演示转换 `UserSelfReference` 实体类为实体表信息：
 
 .User
 [source%nowrap,java]
@@ -38,7 +38,7 @@ public class User {
 |===
 
 * 编码使用全限定类名
-* 名称通过注解获取，若无注解使用简单名称即 `User`
+* 名称通过注解获取，若无注解使用简单名称即 `UserSelfReference`
 
 .Java 基础类型
 |===
@@ -227,3 +227,7 @@ public class User {
 . 关联
 .. 必填
 
+== 待办
+
+* 模块拆解。clazz 不依赖 service，resolveClass 返回的 EntityAdd 需要重新定义
+* 注解属于实现层面，不属于接口层面

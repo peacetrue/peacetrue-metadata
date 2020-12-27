@@ -8,7 +8,7 @@ export const propertyMessages = {
                 'code': '编码',
                 'name': '名称',
                 'typeId': '类型',
-                'associateEntityId': '关联实体',
+                'referenceId': '关联实体',
                 'remark': '备注',
                 'serialNumber': '序号',
                 'creatorId': '创建者主键',
@@ -20,7 +20,7 @@ export const propertyMessages = {
     }
 }
 
-//['id','entityId','code','name','typeId','associateEntityId','remark','serialNumber','creatorId','createdTime','modifierId','modifiedTime',]
+//['id','entityId','code','name','typeId','referenceId','remark','serialNumber','creatorId','createdTime','modifierId','modifiedTime',]
 //['主键','实体','编码','名称','类型','关联实体','备注','序号','创建者主键','创建时间','修改者主键','最近修改时间',]
 
 export default propertyMessages;

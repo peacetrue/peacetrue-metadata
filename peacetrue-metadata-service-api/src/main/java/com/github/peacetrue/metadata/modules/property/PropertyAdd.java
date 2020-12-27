@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
  */
 @Getter
 @Setter
-@ToString(exclude = "associateEntity")
+@ToString(exclude = "reference")
 @NoArgsConstructor
 @AllArgsConstructor
 public class PropertyAdd extends OperatorCapableImpl<Long> {
@@ -35,9 +35,9 @@ public class PropertyAdd extends OperatorCapableImpl<Long> {
     @NotNull
     private Long typeId;
     /** 关联实体. 关联的实体，若无设置为 0 */
-    private Long associateEntityId;
+    private Long referenceId;
     /** 关联实体 */
-    private EntityAdd associateEntity;
+    private EntityAdd reference;
     /** 备注 */
     @Size(min = 1, max = 255)
     private String remark;

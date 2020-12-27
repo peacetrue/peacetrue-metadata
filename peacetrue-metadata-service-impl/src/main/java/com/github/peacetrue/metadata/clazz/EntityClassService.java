@@ -9,6 +9,9 @@ import reactor.core.publisher.Mono;
  **/
 public interface EntityClassService {
 
+    /** 初始化。目前做的具体事项包括：设置【java 基础类型】字典 */
+    Mono<Void> init();
+
     Mono<EntityAdd> resolveClass(Class<?> entityClass);
 
 }

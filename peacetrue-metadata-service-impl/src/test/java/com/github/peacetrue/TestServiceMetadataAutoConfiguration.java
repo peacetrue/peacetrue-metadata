@@ -14,6 +14,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.r2dbc.connectionfactory.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 
 /**
  * @author xiayx
@@ -27,6 +28,7 @@ import org.springframework.test.context.ActiveProfiles;
 })
 @EnableAutoConfiguration
 @ActiveProfiles("metadata-service-test")
+@TestPropertySource("classpath*:application-metadata-service-test.yml")
 public class TestServiceMetadataAutoConfiguration {
 
     @Autowired

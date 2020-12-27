@@ -63,6 +63,9 @@ allprojects { project ->
         testImplementation 'org.jeasy:easy-random-bean-validation', {
             exclude('group': 'org.yaml')
         }
+        testImplementation 'javax.validation:validation-api'
+        testImplementation 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api'
+        testImplementation 'com.github.peacetrue:peacetrue-validation'
     }
 
     test {
