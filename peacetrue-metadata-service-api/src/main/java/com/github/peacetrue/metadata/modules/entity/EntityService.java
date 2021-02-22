@@ -19,7 +19,7 @@ public interface EntityService {
     Mono<EntityVO> add(EntityAdd params);
 
     /** 分页查询 */
-    Mono<Page<EntityVO>> query(@Nullable EntityQuery params, @Nullable Pageable pageable, String... projection);
+    Mono<Page<EntityVO>> query(EntityQuery params, @Nullable Pageable pageable, String... projection);
 
     /** 全量查询 */
     Flux<EntityVO> query(EntityQuery params, @Nullable Sort sort, String... projection);

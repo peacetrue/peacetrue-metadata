@@ -16,7 +16,8 @@ import java.util.Set;
  */
 @Getter
 @Setter
-@ToString
+@Builder
+@ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class EntityAdd extends OperatorCapableImpl<Long> {
